@@ -43,7 +43,7 @@ release {
 
 task releaseBuild {
     dependsOn(
-            'service-api:clean'
+            ':service-api:clean'
     )
 }
 
