@@ -39,7 +39,6 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
-    apply plugin: "net.researchgate.release"    
 }
 
 // Projet App Spring Boot 2
@@ -52,6 +51,7 @@ project(':app') {
 	apply plugin: "org.springframework.boot"
 	apply plugin: "com.github.spotbugs"
 	apply plugin: "pmd"
+    apply plugin: "net.researchgate.release" 
 }
 
 // Projet Service API

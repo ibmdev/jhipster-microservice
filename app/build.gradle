@@ -41,8 +41,6 @@ release {
    buildTasks = ['releaseBuild']
 }
 task releaseBuild {
-beforeReleaseBuild.dependsOn project (':service-api').collect({it.getTasks().getByName("build")})
-
 }
 
 /* Build Info Properties exposé par /actuator/info */
@@ -90,7 +88,6 @@ if(!project.hasProperty('profil') || (project.hasProperty('profil') && project.e
 }
 compileJava.dependsOn processResources
 processResources.dependsOn bootBuildInfo
-beforeReleaseBuild.dependsOn compileJava 
 
 
 
