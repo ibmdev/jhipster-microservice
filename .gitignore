@@ -1,0 +1,4 @@
+.gradle/
+*.class
+app/build/
+service-api/build/

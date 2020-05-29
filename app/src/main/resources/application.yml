@@ -1,0 +1,30 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    jolokia:
+      enabled: true
+    health:
+      show-details: ALWAYS
+spring:
+  datasource:
+    jdbc-url: jdbc:db2://db2zhdevt2:51447/WFA1D3
+    username: WFD3WV
+    driverClassName: com.ibm.db2.jcc.DB2Driver
+    password: XjqEq925
+    initialization-mode: never
+    platform: db2
+    hikari:
+      connectionTimeout: 20000
+      maximum-pool-size: 10
+      schema: WV01
+  profiles:
+    active: prod
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  level:
+    fr.sma.bw.tests: TRACE

@@ -1,0 +1,40 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    jolokia:
+      enabled: true
+    health:
+      show-details: ALWAYS
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+  datasource:
+    jdbc-url: jdbc:h2:mem:k8sDB
+    username: root
+    driverClassName: org.h2.Driver
+    password: admin
+    initialization-mode: embedded
+    platform: h2
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  level:
+    fr.sma.bw.tests: TRACE
+server:
+  error:
+    whitelabel:
+      enabled: false

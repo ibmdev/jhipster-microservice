@@ -1,0 +1,46 @@
+afterEvaluate {
+	generateSwaggerCode.finalizedBy(project.tasks.copySwaggerGeneratedCode)
+	compileJava.dependsOn('generateSwaggerCode')
+	generateSwaggerCode.dependsOn('validateSwagger')
+	validateSwagger.dependsOn('clean')
+	
+}
+version "${apiVersion}"
+group 'fr.sma.svc.bw'
+apply plugin: 'maven'
+sourceCompatibility = "${javaVersion}"
+targetCompatibility = "${javaVersion}"
+def defaultEncoding = "${encoding}"
+[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+def coverageSourceDirs = ['src/main/java']
+apply plugin: 'base'
+apply plugin: "org.hidetake.swagger.generator"
+apply plugin: "org.asciidoctor.convert"
+
+// Dependencies
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	springFoxArtifacts.each {
+		artifact -> compile("io.springfox:$artifact:$springFoxVersion")
+	}
+	swaggerCodegen("io.swagger:swagger-codegen-cli:$swaggerCodeGenVersion")
+}
+
+// Clean
+clean.doFirst {
+    delete "src/main/java"
+}
+
+task copySwaggerGeneratedCode(type: Copy) {
+	from "${buildDir}/swagger-code"
+	into "${projectDir}"
+}
+generateSwaggerCode {
+	configFile = file('src/main/resources/swagger/config.json')
+	components = ['models', 'apis']
+	inputFile = file('src/main/resources/swagger/swagger.yml')
+	language = 'spring'
+}
+validateSwagger {
+	inputFile = file('src/main/resources/swagger/swagger.yml')
+}

@@ -1,0 +1,61 @@
+buildscript {
+	ext {
+		springBootVersion = '2.2.7.RELEASE'
+        javaVersion = '1.8'
+        encoding = 'UTF-8'
+        gradleSwaggerGeneratorVersion = '2.18.2' 
+        asciidoctorGradleJvmVersion = '2.4.0'
+        springDependencyManagementVersion = '1.0.9.RELEASE'
+	}
+	repositories {
+        maven {
+            url "${urlArtifactory}"
+        }
+        mavenLocal()
+	}
+	dependencies {
+        classpath "gradle.plugin.org.hidetake:gradle-swagger-generator-plugin:$gradleSwaggerGeneratorVersion"
+		classpath "org.asciidoctor:asciidoctor-gradle-jvm:$asciidoctorGradleJvmVersion"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath "io.spring.gradle:dependency-management-plugin:$springDependencyManagementVersion"
+        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.2.2"
+    }
+}
+// Pour tous les projets
+allprojects {}
+
+// Pour les sous projets
+subprojects {
+    repositories {
+        maven {
+            url "${urlArtifactory}"
+            allowInsecureProtocol = true
+        }
+        mavenLocal()
+    }
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'    
+}
+
+// Projet App Spring Boot 2
+project(':app') {
+    dependencies {
+        compile project (':service-api')
+    }
+    apply plugin: "io.spring.dependency-management"
+	apply plugin: "org.springframework.boot"
+	apply plugin: "com.github.spotbugs"
+	apply plugin: "pmd"
+}
+
+// Projet Service API
+project(':service-api') {
+    
+    // Propriétés du module service-api
+    ext.springFoxArtifacts = ["springfox-swagger2", "springfox-swagger-ui"]
+	ext.springFoxVersion = "2.9.2"
+	ext.swaggerCodeGenVersion = "2.4.13"
+    ext.swaggerGeneratorVersion = "2.18.2"
+    ext.apiVersion = "1.0.0"
+}
