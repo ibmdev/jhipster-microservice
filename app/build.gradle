@@ -41,6 +41,8 @@ release {
    buildTasks = ['releaseBuild']
 }
 task releaseBuild {
+beforeReleaseBuild.dependsOn project (':service-api').collect({it.getTasks().getByName("build")})
+
 }
 
 /* Build Info Properties exposé par /actuator/info */
