@@ -40,11 +40,7 @@ dependencies {
 release {
    buildTasks = ['releaseBuild']
 }
-
 task releaseBuild {
-    dependsOn(
-            ':service-api:clean'
-    )
 }
 
 /* Build Info Properties exposé par /actuator/info */
@@ -92,6 +88,7 @@ if(!project.hasProperty('profil') || (project.hasProperty('profil') && project.e
 }
 compileJava.dependsOn processResources
 processResources.dependsOn bootBuildInfo
+beforeReleaseBuild.dependsOn compileJava 
 
 
 
