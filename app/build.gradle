@@ -41,9 +41,7 @@ release {
     buildTasks = ['releaseBuild']
 }
 task releaseBuild {
-	dependsOn(
-            'service-api:release'
-    )
+	dependsOn subprojects.findResults { it.tasks.findByName('build') }
 }
 
 /* Build Info Properties exposé par /actuator/info */
