@@ -26,6 +26,12 @@ dependencies {
 	swaggerCodegen("io.swagger:swagger-codegen-cli:$swaggerCodeGenVersion")
 }
 
+/* Release de l'API */
+release {
+    buildTasks = ['releaseBuild']
+}
+task releaseBuild {}
+
 // Clean
 clean.doFirst {
     delete "src/main/java"

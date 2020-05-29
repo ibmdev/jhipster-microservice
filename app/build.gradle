@@ -4,7 +4,7 @@ afterEvaluate {
 }
 ext.javaVersion =  project.hasProperty('javaVersion') ? project.getProperty('javaVersion') : '1.8'
 group = 'fr.sma.bw'
-version = '0.0.1-SNAPSHOT'
+version = appVersion
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
@@ -37,7 +37,17 @@ dependencies {
 	}
 }
 
-/* Build Info Properties auto-generate by actuator/info */
+/* Release de l'application */
+release {
+    buildTasks = ['releaseBuild']
+}
+task releaseBuild {
+	dependsOn(
+            'service-api:release'
+    )
+}
+
+/* Build Info Properties exposé par /actuator/info */
 springBoot {
     buildInfo()
 }

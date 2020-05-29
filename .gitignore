@@ -2,3 +2,9 @@
 *.class
 app/build/
 service-api/build/
+*.project
+.settings/
+*.classpath
+.vscode/
+app/bin/
+service-api/bin/
