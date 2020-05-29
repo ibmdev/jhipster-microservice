@@ -4,7 +4,6 @@ afterEvaluate {
 }
 ext.javaVersion =  project.hasProperty('javaVersion') ? project.getProperty('javaVersion') : '1.8'
 group = 'fr.sma.bw'
-version = appVersion
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 

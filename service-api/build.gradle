@@ -5,7 +5,6 @@ afterEvaluate {
 	validateSwagger.dependsOn('clean')
 	
 }
-version "${apiVersion}"
 group 'fr.sma.svc.bw'
 apply plugin: 'maven'
 sourceCompatibility = "${javaVersion}"

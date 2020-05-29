@@ -8,9 +8,7 @@ buildscript {
         springDependencyManagementVersion = '1.0.9.RELEASE'
         spotBugsVersion = '4.2.2'
         releaseGradlePluginVersion = '2.8.1'
-        bwVersion = "1.0.0-SNAPSHOT"
-
-	}
+    }
 	repositories {
         maven {
             url "${urlArtifactory}"
@@ -46,7 +44,6 @@ subprojects {
 // Projet App Spring Boot 2
 project(':app') {
     // Propriétés du module APP
-    ext.appVersion = bwVersion
     dependencies {
         compile project (':service-api')
     }
@@ -65,6 +62,5 @@ project(':service-api') {
 	ext.springFoxVersion = "2.9.2"
 	ext.swaggerCodeGenVersion = "2.4.13"
     ext.swaggerGeneratorVersion = "2.18.2"
-    ext.apiVersion = bwVersion
     apply plugin: "net.researchgate.release"
 }
