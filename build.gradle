@@ -38,7 +38,8 @@ subprojects {
     }
     apply plugin: 'java'
     apply plugin: 'eclipse'
-    apply plugin: 'idea'    
+    apply plugin: 'idea'
+    apply plugin: "net.researchgate.release"    
 }
 
 // Projet App Spring Boot 2
@@ -51,7 +52,6 @@ project(':app') {
 	apply plugin: "org.springframework.boot"
 	apply plugin: "com.github.spotbugs"
 	apply plugin: "pmd"
-    apply plugin: "net.researchgate.release"
 }
 
 // Projet Service API
@@ -62,5 +62,4 @@ project(':service-api') {
 	ext.springFoxVersion = "2.9.2"
 	ext.swaggerCodeGenVersion = "2.4.13"
     ext.swaggerGeneratorVersion = "2.18.2"
-    apply plugin: "net.researchgate.release"
 }

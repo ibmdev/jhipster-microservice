@@ -36,14 +36,16 @@ dependencies {
 	}
 }
 
-/* Release de l'application
+/* Release */
 release {
-    buildTasks = ['releaseBuild']
+   buildTasks = ['releaseBuild']
 }
+
 task releaseBuild {
-	dependsOn subprojects.findResults { it.tasks.findByName('build') }
+    dependsOn(
+            'service-api:clean'
+    )
 }
-*/
 
 /* Build Info Properties exposé par /actuator/info */
 springBoot {

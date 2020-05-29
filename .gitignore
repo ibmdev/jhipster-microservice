@@ -8,3 +8,4 @@ service-api/build/
 .vscode/
 app/bin/
 service-api/bin/
+service-api/src/main/java/
