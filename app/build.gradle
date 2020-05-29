@@ -6,6 +6,7 @@ ext.javaVersion =  project.hasProperty('javaVersion') ? project.getProperty('jav
 group = 'fr.sma.bw'
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
+ext.lot = "${lot}"
 
 /* Dependencies */
 dependencies {
@@ -38,9 +39,9 @@ dependencies {
 
 /* Release */
 release {
-   buildTasks = ['releaseBuild']
-}
-task releaseBuild {
+preTagCommitMessage = '['+lot+'] - tag : '
+tagCommitMessage = '['+lot+'] - création du tag: '
+newVersionCommitMessage = '['+lot+'] - nouvelle version : '
 }
 
 /* Build Info Properties exposé par /actuator/info */
