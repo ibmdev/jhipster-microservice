@@ -92,7 +92,7 @@ processResources.dependsOn bootBuildInfo
 pmdTest.dependsOn pmdMain
 spotbugsMain.dependsOn pmdTest
 spotbugsTest.dependsOn spotbugsMain
-integrationTest.dependsOn spotbugsTest  
+test.dependsOn spotbugsTest  
 
 
 
