@@ -8,17 +8,19 @@ sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 ext.lot = "${lot}"
 
+
 /* Dependencies */
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
-	implementation 'org.jolokia:jolokia-core:1.6.2'
+    implementation 'org.jolokia:jolokia-core:1.6.2'
 	implementation 'org.mapstruct:mapstruct:1.3.1.Final'
 	implementation 'org.modelmapper:modelmapper:2.3.7'
-	implementation 'com.ibm.db2.jcc:db2jcc:db2jcc4'
+	implementation 'com.ibm.db2:db2jcc4:4.19.66'
 	implementation project(':service-api')
 	implementation 'com.github.spotbugs:spotbugs:4.0.3'
 	compileOnly 'org.projectlombok:lombok:1.18.12'
@@ -37,14 +39,31 @@ dependencies {
 	}
 }
 
-/* Release */
-release {
-preTagCommitMessage = '['+lot+'] - tag : '
-tagCommitMessage = '['+lot+'] - création du tag: '
-newVersionCommitMessage = '['+lot+'] - nouvelle version : '
+
+/* SonarQube */
+sonarqube {
+	properties {
+		property 'sonar.exclusions', "**/fr/sma/bw/**"
+		property 'sonar.coverage.exclusions', "**/fr/sma/bw/**"
+		property 'sonar.inclusions', "**/fr/sma/bw/components/**"
+	}
 }
 
-/* Build Info Properties exposé par /actuator/info */
+/* PMD */
+pmd {
+	ruleSets = []
+	ruleSetConfig = resources.text.fromFile("config/pmd/ruleset.xml")
+}
+
+
+/* Release */
+release {
+	preTagCommitMessage = '['+lot+'] - tag : '
+	tagCommitMessage = '['+lot+'] - création du tag: '
+	newVersionCommitMessage = '['+lot+'] - nouvelle version : '
+}
+
+/* Build Info Properties auto-generate by actuator/info */
 springBoot {
     buildInfo()
 }
@@ -89,9 +108,7 @@ if(!project.hasProperty('profil') || (project.hasProperty('profil') && project.e
 }
 compileJava.dependsOn processResources
 processResources.dependsOn bootBuildInfo
-pmdTest.dependsOn pmdMain
-spotbugsMain.dependsOn pmdTest
-spotbugsTest.dependsOn spotbugsMain
+spotbugsTest.dependsOn spotbugsMain		
 test.dependsOn spotbugsTest  
 
 

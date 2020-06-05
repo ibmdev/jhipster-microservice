@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 public class UserController implements UsersApi {
-    private transient final UserService userService;
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-    public ResponseEntity<ListUserResponse> getUsers() {
-        ListUserResponse users = this.userService.retrieveUsers();
-        return new ResponseEntity<>(users, users.isEmpty() ? HttpStatus.OK:HttpStatus.NOT_FOUND);
-
-    }
+  private final UserService userService;
+  public UserController(final UserService userService) {
+  this.userService = userService;
+  }
+  @Override
+  public ResponseEntity<ListUserResponse> getUsers() {
+  final ListUserResponse users = this.userService.retrieveUsers();
+  HttpStatus codeRetour = HttpStatus.OK;
+  if(users.isEmpty()) {
+	  log.debug("Aucun résultat");
+	  codeRetour = HttpStatus.NOT_FOUND;
+  }
+  return new ResponseEntity<>(users, codeRetour);
+  }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ruleset>
+
+	<exclude-pattern>.*/fr/sma/bw/BwMicroserviceApplication.*</exclude-pattern>
+	<rule ref="category/java/bestpractices.xml"></rule>
+    <rule ref="category/java/codestyle.xml">
+    	<exclude name="AtLeastOneConstructor"></exclude>
+    	<exclude name="OnlyOneReturn"></exclude>
+    </rule>
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions">
+    	<properties>
+        	<property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]+(Utils?|Helper|Constants)" />
+    	</properties>
+	</rule>
+    <rule ref="category/java/codestyle.xml/ShortVariable">
+    	<properties>
+        	<property name="minimum" value="2" />
+    	</properties>
+	</rule>
+    <rule ref="category/java/codestyle.xml/LongVariable">
+    	<properties>
+        	<property name="minimum" value="50" />
+    	</properties>
+	</rule>
+	<rule ref="category/java/codestyle.xml/ShortClassName">
+    	<properties>
+        	<property name="minimum" value="4" />
+    	</properties>
+	</rule>
+	<rule ref="category/java/design.xml">
+		<exclude name="LawOfDemeter"></exclude>
+		<exclude name="DataClass"></exclude>
+		<exclude name="AvoidUncheckedExceptionsInSignatures"></exclude>
+		<exclude name="SignatureDeclareThrowsException"></exclude>
+	</rule>
+    <rule ref="category/java/documentation.xml">
+    	<exclude name="CommentRequired"></exclude>
+    </rule>
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="BeanMembersShouldSerialize"/>
+        <exclude name="DataflowAnomalyAnalysis"></exclude>
+    </rule>
+    <rule ref="category/java/multithreading.xml"></rule>
+    <rule ref="category/java/performance.xml"></rule>
+    <rule ref="category/java/security.xml"></rule>
+</ruleset>

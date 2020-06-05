@@ -16,19 +16,21 @@ import java.util.List;
 @Profile("prod")
 public class DataInitializerDefault implements ApplicationRunner {
 
-    private transient final JournalTechniqueJDBC journalTechniqueJDBC;
-    private transient final JournalTechniqueDao journalTechniqueDao;
+  private final JournalTechniqueJDBC journalTechniqueJDBC;
+  private final JournalTechniqueDao journalTechniqueDao;
 
-    public DataInitializerDefault(JournalTechniqueJDBC journalTechniqueJDBC, JournalTechniqueDao journalTechniqueDao) {
-        this.journalTechniqueJDBC = journalTechniqueJDBC;
-        this.journalTechniqueDao = journalTechniqueDao;
-    }
+  public DataInitializerDefault(final JournalTechniqueJDBC journalTechniqueJDBC, final JournalTechniqueDao journalTechniqueDao) {
+    this.journalTechniqueJDBC = journalTechniqueJDBC;
+    this.journalTechniqueDao = journalTechniqueDao;
+  }
 
-    public void run(ApplicationArguments applicationArguments) throws Exception {
-        List<JournalTechnique> jdbcs = this.journalTechniqueJDBC.getAll();
-        log.info("Base JOURNAL_TECHNIQUE -->  nombre de lignes JDBC : "+ jdbcs.size());
-        List<JournalTechnique> daos = this.journalTechniqueDao.getAll();
+  @Override
+  public void run(final ApplicationArguments applicationArguments) throws Exception {
+    final List<JournalTechnique> jdbcs = this.journalTechniqueJDBC.getAll();
+    final List<JournalTechnique> daos = this.journalTechniqueDao.getAll();
+    if(log.isInfoEnabled()) {
+    	log.info("Base JOURNAL_TECHNIQUE -->  nombre de lignes JDBC : "+ jdbcs.size());
         log.info("Base JOURNAL_TECHNIQUE -->  nombre de lignes MyBatis : "+ daos.size());
-
     }
+   }
 }

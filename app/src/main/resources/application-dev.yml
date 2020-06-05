@@ -1,8 +1,13 @@
 management:
+  trace:
+    http:
+      enabled: true
+      include: request-headers,response-headers,cookie-headers,principal,time-taken,authorization-header,remote-address,session-id
+      tracebody: true 
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: info,health,httptrace
   endpoint:
     jolokia:
       enabled: true
@@ -23,6 +28,8 @@ spring:
     password: admin
     initialization-mode: embedded
     platform: h2
+  profiles:
+    active: dev 
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect

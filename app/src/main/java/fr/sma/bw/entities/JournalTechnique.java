@@ -3,13 +3,13 @@ package fr.sma.bw.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import fr.sma.bw.builders.JournalTechniqueBuilder;
 
 public class JournalTechnique implements Serializable {
 
     private static final long serialVersionUID = -32138168293547435L;
 
-	public JournalTechnique() {}
-    private Integer idOperation;
+	private Integer idOperation;
     private String lbOperation;
     private String typeOperation;
     private String dateOperation;
@@ -22,12 +22,16 @@ public class JournalTechnique implements Serializable {
     private byte[] fluxEntree;
     private String cdApplication;
     private byte[] fluxRetour;
+    
+    public JournalTechnique() {
+    	super();
+    }
 
     public Integer getIdOperation() {
         return idOperation;
     }
 
-    public void setIdOperation(Integer idOperation) {
+    public void setIdOperation(final Integer idOperation) {
         this.idOperation = idOperation;
     }
 
@@ -35,7 +39,7 @@ public class JournalTechnique implements Serializable {
         return lbOperation;
     }
 
-    public void setLbOperation(String lbOperation) {
+    public void setLbOperation(final String lbOperation) {
         this.lbOperation = lbOperation;
     }
 
@@ -43,7 +47,7 @@ public class JournalTechnique implements Serializable {
         return typeOperation;
     }
 
-    public void setTypeOperation(String typeOperation) {
+    public void setTypeOperation(final String typeOperation) {
         this.typeOperation = typeOperation;
     }
 
@@ -51,7 +55,7 @@ public class JournalTechnique implements Serializable {
         return dateOperation;
     }
 
-    public void setDateOperation(String dateOperation) {
+    public void setDateOperation(final String dateOperation) {
         this.dateOperation = dateOperation;
     }
 
@@ -59,7 +63,7 @@ public class JournalTechnique implements Serializable {
         return idCorrelation;
     }
 
-    public void setIdCorrelation(String idCorrelation) {
+    public void setIdCorrelation(final String idCorrelation) {
         this.idCorrelation = idCorrelation;
     }
 
@@ -67,7 +71,7 @@ public class JournalTechnique implements Serializable {
         return copyDate(dateRetourOperation);
     }
 
-    public void setDateRetourOperation(Date dateRetourOperation) {
+    public void setDateRetourOperation(final Date dateRetourOperation) {
         this.dateRetourOperation = copyDate(dateRetourOperation);
     }
 
@@ -75,7 +79,7 @@ public class JournalTechnique implements Serializable {
         return statut;
     }
 
-    public void setStatut(int statut) {
+    public void setStatut(final int statut) {
         this.statut = statut;
     }
 
@@ -83,7 +87,7 @@ public class JournalTechnique implements Serializable {
         return idDemande;
     }
 
-    public void setIdDemande(String idDemande) {
+    public void setIdDemande(final String idDemande) {
         this.idDemande = idDemande;
     }
 
@@ -91,7 +95,7 @@ public class JournalTechnique implements Serializable {
         return cdRetour;
     }
 
-    public void setCdRetour(String cdRetour) {
+    public void setCdRetour(final String cdRetour) {
         this.cdRetour = cdRetour;
     }
 
@@ -99,7 +103,7 @@ public class JournalTechnique implements Serializable {
         return lbRetour;
     }
 
-    public void setLbRetour(String lbRetour) {
+    public void setLbRetour(final String lbRetour) {
         this.lbRetour = lbRetour;
     }
 
@@ -107,7 +111,7 @@ public class JournalTechnique implements Serializable {
         return cloneArrayBytes(fluxEntree);
     }
 
-    public void setFluxEntree(byte[] fluxEntree) {
+    public void setFluxEntree(final byte[] fluxEntree) {
         this.fluxEntree = cloneArrayBytes(fluxEntree);
     }
 
@@ -115,7 +119,7 @@ public class JournalTechnique implements Serializable {
         return cdApplication;
     }
 
-    public void setCdApplication(String cdApplication) {
+    public void setCdApplication(final String cdApplication) {
         this.cdApplication = cdApplication;
     }
 
@@ -123,24 +127,29 @@ public class JournalTechnique implements Serializable {
         return cloneArrayBytes(fluxRetour);
     }
 
-    public void setFluxRetour(byte[] fluxRetour) {
+    public void setFluxRetour(final byte[] fluxRetour) {
         this.fluxRetour = cloneArrayBytes(fluxRetour);
     }
 
-    private byte[] cloneArrayBytes(byte[] bytes) {
-        try {
-            return bytes.clone();
-        }
-        catch (Exception e) {
-            return null;
-        }
+    private byte[] cloneArrayBytes(final byte[] bytes) {
+    	if(bytes != null) {
+    		return bytes.clone();
+    	}
+    	return new byte[0];
+        
     }
-    private Date copyDate(Date date) {
-        try {
-            return new Date(date.getTime());
+    private Date copyDate(final Date date) {
+        if(date != null) {
+        	return new Date(date.getTime());
         }
-        catch (Exception e) {
-            return null;
-        }
+        return null;
+    }
+    public JournalTechnique(final JournalTechniqueBuilder builder) {
+        this.lbOperation = builder.getLbOperation();
+    	this.typeOperation = builder.getTypeOperation();
+    	this.dateOperation = builder.getDateOperation();
+    	this.cdRetour = builder.getCdRetour();
+    	this.statut = builder.getStatut();
+        
     }
 }

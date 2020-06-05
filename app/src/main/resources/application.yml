@@ -1,8 +1,13 @@
 management:
+  trace:
+    http:
+      enabled: true
+      include: request-headers,response-headers,cookie-headers,principal,time-taken,authorization-header,remote-address,session-id
+      tracebody: true 
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: info,health,httptrace
   endpoint:
     jolokia:
       enabled: true
@@ -28,3 +33,5 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   level:
     fr.sma.bw.tests: TRACE
+ 
+    

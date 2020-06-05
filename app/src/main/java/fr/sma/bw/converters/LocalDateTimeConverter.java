@@ -5,10 +5,14 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class LocalDateTimeConverter implements AttributeConverter < LocalDateTime, Timestamp > {
-    public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {
-        return attribute != null ? Timestamp.valueOf(attribute) : null;
+	
+	@Override
+    public Timestamp convertToDatabaseColumn(final LocalDateTime attribute) {
+    	return (attribute == null) ? null : Timestamp.valueOf(attribute);
+        
     }
-    public LocalDateTime convertToEntityAttribute(Timestamp dbData) {
-        return dbData != null ? dbData.toLocalDateTime() : null;
+    @Override
+    public LocalDateTime convertToEntityAttribute(final Timestamp dbData) {
+        return (dbData == null) ? null : dbData.toLocalDateTime();
     }
 }

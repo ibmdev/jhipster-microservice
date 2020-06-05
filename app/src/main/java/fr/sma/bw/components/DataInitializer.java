@@ -16,18 +16,21 @@ import java.util.List;
 @Slf4j
 public class DataInitializer implements ApplicationRunner {
 
-    private transient final UserDao userDao;
-    private transient final JournalTechniqueDao journalTechniqueDao;
+  private final UserDao userDao;
+  private final JournalTechniqueDao journalTechniqueDao;
 
-    public DataInitializer(UserDao userDao, JournalTechniqueDao journalTechniqueDao) {
-        this.userDao = userDao;
-        this.journalTechniqueDao = journalTechniqueDao;
-    }
+  public DataInitializer(final UserDao userDao, final JournalTechniqueDao journalTechniqueDao) {
+    this.userDao = userDao;
+    this.journalTechniqueDao = journalTechniqueDao;
+  }
 
-    public void run(ApplicationArguments applicationArguments) throws Exception {
-        List<User> users = this.userDao.getListUsers();
-        List<JournalTechnique> jts = this.journalTechniqueDao.getAll();
-        log.info("Base User -->  nombre de lignes : "+ users.size());
+  @Override
+  public void run(final ApplicationArguments applicationArguments) throws Exception {
+    final List<User> users = this.userDao.getListUsers();
+    final List<JournalTechnique> jts = this.journalTechniqueDao.getAll();
+    if(log.isInfoEnabled()) {
+    	log.info("Base User -->  nombre de lignes : "+ users.size());
         log.info("Base JOURNAL_TECHNIQUE -->  nombre de lignes : "+ jts.size());
     }
+  }
 }

@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-        springBootVersion = '2.2.7.RELEASE'
+		springBootVersion = '2.2.7.RELEASE'
         javaVersion = '1.8'
         encoding = 'UTF-8'
         gradleSwaggerGeneratorVersion = '2.18.2' 
@@ -8,11 +8,11 @@ buildscript {
         springDependencyManagementVersion = '1.0.9.RELEASE'
         spotBugsVersion = '4.2.2'
         releaseGradlePluginVersion = '2.8.1'
-    }
+        sonarqubeVersion = '2.8'
+	}
 	repositories {
-		mavenCentral()
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url "${urlArtifactory}"
         }
         mavenLocal()
 	}
@@ -23,6 +23,7 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:$springDependencyManagementVersion"
         classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:$spotBugsVersion"
         classpath "net.researchgate:gradle-release:$releaseGradlePluginVersion"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarqubeVersion}"
     }
 }
 // Pour tous les projets
@@ -31,28 +32,29 @@ allprojects {}
 // Pour les sous projets
 subprojects {
     repositories {
-        mavenCentral()
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url "${urlArtifactory}"
+            allowInsecureProtocol = true
         }
         mavenLocal()
     }
     apply plugin: 'java'
     apply plugin: 'eclipse'
-    apply plugin: 'idea'
+    apply plugin: 'idea'    
 }
 
 // Projet App Spring Boot 2
 project(':app') {
-    // Propriétés du module APP
     dependencies {
         compile project (':service-api')
     }
     apply plugin: "io.spring.dependency-management"
 	apply plugin: "org.springframework.boot"
 	apply plugin: "com.github.spotbugs"
+	apply plugin: "org.sonarqube"
+	apply plugin: "net.researchgate.release" 
 	apply plugin: "pmd"
-    apply plugin: "net.researchgate.release" 
+	//-Dsonar.host.url=http://qsprod1.orleanssrv.domsma:9000
 }
 
 // Projet Service API

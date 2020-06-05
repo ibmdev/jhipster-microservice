@@ -1,52 +1,39 @@
 package fr.sma.bw.mappers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ObjectMapperUtils {
+public final class ObjectMapperUtils {
 
     private static ModelMapper modelMapper = new ModelMapper();
     private static ObjectMapper objectMapper = new ObjectMapper();
-
-    public ObjectMapperUtils() {}
-    public static  <D, T> D map(final T entity, Class<D> outClass) {
+    
+    private ObjectMapperUtils() {}
+    
+    public static  <D, T> D map(final T entity, final Class<D> outClass) {
         return modelMapper.map(entity, outClass);
     }
-    public static <S, D> D map(final S source, D destination) {
+    public static <S, D> D map(final S source, final D destination) {
         modelMapper.map(source, destination);
         return destination;
     }
-    public static <D, T> List<D> mapAll(final Collection<T> entityList, Class<D> outCLass) {
+    public static <D, T> List<D> mapAll(final Collection<T> entityList, final Class<D> outCLass) {
         return entityList.stream()
                 .map(entity -> map(entity, outCLass))
                 .collect(Collectors.toList());
     }
-    public static <D> D mapJson(final String entity, Class<D> outClass)  {
+    public static <T> T mapJson(final String entity, final Class<T> outClass)  {
         try {
             return objectMapper.readValue(entity, outClass);
         }
-        catch(Exception e) {
-            return null;
-        }
-    }
-
-    public static <T> List<T> mapJsonAsList(final String entity, Class<T> outClass)  {
-        try {
-            Class<T[]> arrayClass = (Class<T[]>) Class.forName("[L" + outClass.getName() + ";");
-            T[] objects = objectMapper.readValue(entity, arrayClass);
-            return Arrays.asList(objects);
-        }
-        catch(ClassNotFoundException cnfe) {
-            return null;
-        }
         catch(JsonProcessingException jpe) {
+        	log.error("Erreur de mapping Json", jpe);
             return null;
         }
     }

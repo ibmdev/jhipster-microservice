@@ -4,20 +4,21 @@ import fr.sma.svc.bw.service.model.ListUserResponse;
 import fr.sma.bw.entities.User;
 import fr.sma.bw.mappers.ObjectMapperUtils;
 import fr.sma.bw.repositories.mybatis.UserDao;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import java.util.List;
-@Service
+
+@Component
 public class UserService {
-    private transient final UserDao userDao;
-    public UserService(UserDao userDao) {
+    private final UserDao userDao;
+    public UserService(final UserDao userDao) {
         this.userDao = userDao;
     }
     public ListUserResponse retrieveUsers() {
-        List<User> reponseDTO  = this.userDao.getListUsers();
-        List<fr.sma.svc.bw.service.model.User> listUers  =
+        final List<User> reponseDTO  = this.userDao.getListUsers();
+        final List<fr.sma.svc.bw.service.model.User> listUsers  =
         ObjectMapperUtils.mapAll(reponseDTO, fr.sma.svc.bw.service.model.User.class);
-        ListUserResponse out = new ListUserResponse();
-        out.addAll(listUers);
+        final ListUserResponse out = new ListUserResponse();
+        out.addAll(listUsers);
         return out;
     }
 }
